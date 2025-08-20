@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Employee Management{% endblock %}
+
+{% block content %}
+<style>
+    /* Internal CSS for a Fully Decorated User Dashboard */
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: linear-gradient(135deg, #e0f2f7 0%, #c4e4f0 100%); /* Light, refreshing blue gradient */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .main-content-container {
+        flex: none; /* Disable base.html's flex growth for direct body centering */
+        padding: 0;
+        width: 100%;
+    }
+
+    .user-dashboard-main-container {
+        background-color: #ffffff; /* Pure white background */
+        padding: 40px; /* Generous padding */
+        border-radius: 15px; /* More rounded corners for a modern feel */
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); /* Deeper, softer shadow */
+        margin-top: 30px; /* Space from navbar */
+        width: 100%;
+        max-width: 1000px; /* Wider for more content */
+        box-sizing: border-box;
+        border: 1px solid #d0e0ea; /* Subtle border */
+        text-align: center; /* Default center alignment */
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+        background: linear-gradient(45deg, #5cb85c, #4cae4c); /* Green gradient background */
+        color: white;
+        padding: 30px 20px;
+        border-radius: 10px;
+        margin-bottom: 40px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    .welcome-section h2 {
+        font-size: 3em; /* Larger welcome message */
+        margin-bottom: 10px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
+    .welcome-section p {
+        font-size: 1.2em;
+        line-height: 1.5;
+        opacity: 0.9;
+    }
+    .welcome-user-name {
+        font-weight: 900; /* Extra bold for the name */
+        text-transform: capitalize; /* Capitalize first letter of name */
+    }
+
+    /* Dashboard Grid for Sections */
+    .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid columns */
+        gap: 30px; /* More space between grid items */
+        margin-bottom: 40px;
+        text-align: left;
+    }
+
+    .dashboard-card {
+        background-color: #f8fcfb; /* Very light green for cards */
+        border: 1px solid #e2f0e6; /* Soft green border */
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Card shadow */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex; /* For flexible card content */
+        flex-direction: column;
+        justify-content: space-between; /* Push link to bottom */
+        min-height: 180px; /* Ensure consistent card height */
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-10px); /* More pronounced lift effect on hover */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .dashboard-card h3 {
+        color: #333; /* Darker title for better contrast */
+        font-size: 1.6em;
+        margin-top: 0;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 12px; /* Space between icon and text */
+    }
+
+    /* Professional icon styling (you'd typically use Font Awesome for real icons) */
+    .dashboard-card h3::before {
+        font-size: 1.5em; /* Larger icon size */
+        color: #5cb85c; /* Accent color for icons */
+    }
+    .dashboard-card.profile h3::before { content: '👤'; }
+    .dashboard-card.team h3::before { content: '👥'; }
+    .dashboard-card.tasks h3::before { content: '✅'; }
+    .dashboard-card.leave h3::before { content: '🏖️'; }
+    .dashboard-card.documents h3::before { content: '📂'; }
+    .dashboard-card.settings h3::before { content: '⚙️'; }
+    .dashboard-card.performance h3::before { content: '📈'; } /* New icon */
+    .dashboard-card.announcements h3::before { content: '📢'; } /* New icon */
+
+
+    .dashboard-card p {
+        font-size: 0.95em;
+        line-height: 1.6;
+        color: #666;
+        margin-bottom: 25px; /* More space before link */
+        flex-grow: 1; /* Allows paragraph to take available space */
+    }
+
+    .dashboard-card .card-link {
+        display: inline-block;
+        background-color: #5cb85c; /* Green button */
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px; /* More rounded button */
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.95em;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        align-self: flex-start; /* Align link to the left within card */
+    }
+
+    .dashboard-card .card-link:hover {
+        background-color: #4cae4c;
+        transform: translateY(-3px);
+    }
+
+    /* Quick Actions Section (Buttons with icons) */
+    .quick-actions-section {
+        background-color: #e6f7e6; /* Light green background */
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+    .quick-actions-section h3 {
+        color: #2c3e50;
+        font-size: 2em;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 10px;
+    }
+    .quick-actions-section h3::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+        width: 60px;
+        height: 3px;
+        background-color: #5cb85c;
+        border-radius: 2px;
+    }
+
+    .action-buttons-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+    .action-button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #3498db; /* Blue accent for actions */
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.9em;
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        min-width: 120px; /* Ensure buttons have minimum size */
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .action-button:hover {
+        background-color: #2980b9;
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    .action-button .icon {
+        font-size: 2em; /* Larger icon in button */
+        margin-bottom: 8px;
+    }
+    .action-button.add-emp .icon { content: '➕'; }
+    .action-button.view-all .icon { content: '👀'; }
+    .action-button.timesheet .icon { content: '⏱️'; }
+    .action-button.contact-hr .icon { content: '💬'; }
+    .action-button.reports .icon { content: '📊'; }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+        .dashboard-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+    }
+    @media (max-width: 768px) {
+        .user-dashboard-main-container {
+            padding: 30px;
+        }
+        .welcome-section h2 {
+            font-size: 2.2em;
+        }
+        .dashboard-grid {
+            grid-template-columns: 1fr; /* Stack columns on smaller screens */
+        }
+        .dashboard-card {
+            min-height: auto; /* Allow height to adjust */
+        }
+        .action-buttons-grid {
+            grid-template-columns: repeat(2, 1fr); /* Two columns for actions on smaller screens */
+            gap: 15px;
+        }
+        .action-button {
+            min-width: unset; /* Remove min-width to allow flexible sizing */
+        }
+    }
+    @media (max-width: 480px) {
+        .user-dashboard-main-container {
+            margin-top: 15px;
+            padding: 20px;
+        }
+        .welcome-section {
+            padding: 20px 15px;
+        }
+        .welcome-section h2 {
+            font-size: 1.8em;
+        }
+        .welcome-section p {
+            font-size: 1em;
+        }
+        .dashboard-card h3 {
+            font-size: 1.4em;
+        }
+        .dashboard-card p {
+            font-size: 0.9em;
+        }
+        .action-button {
+            padding: 12px 15px;
+            font-size: 0.85em;
+        }
+        .action-button .icon {
+            font-size: 1.8em;
+        }
+    }
+</style>
+
+<div class="user-dashboard-main-container">
+    <div class="welcome-section">
+        <h2>Welcome, <span class="welcome-user-name">{{ user.first_name }} {{ user.last_name }}</span>!</h2>
+        <p>Your personalized hub for seamless employee management. Dive in to manage your profile, team, tasks, and more.</p>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-card profile">
+            <h3>My Profile</h3>
+            <p>View and update your personal information, contact details, and current job specifics.</p>
+            <a href="{% url 'my_profile' %}" class="card-link">Update Profile</a>
+        </div>
+
+        <div class="dashboard-card leave">
+            <h3>Leave Management</h3>
+            <p>Apply for new leave, check your remaining balance, and review past leave history.</p>
+            <a href="/manage-leave/" class="card-link">Manage Leave</a>
+        </div>
+
+        <div class="dashboard-card tasks">
+            <h3>My Tasks</h3>
+            <p>Track your assigned tasks, monitor progress, and manage project deadlines efficiently.</p>
+            <a href="/my-tasks/" class="card-link">View My Tasks</a>
+        </div>
+
+        <div class="dashboard-card documents">
+            <h3>Documents</h3>
+            <p>Access important company policies, payslips, and other essential personal documents securely.</p>
+            <a href="/my-documents/" class="card-link">View Documents</a>
+        </div>
+
+        <div class="dashboard-card team">
+            <h3>Team Directory</h3>
+            <p>Find contact information for your colleagues, view team structures, and connect easily.</p>
+            <a href="/view-team/" class="card-link">Explore Team</a>
+        </div>
+
+        <div class="dashboard-card performance">
+            <h3>Performance</h3>
+            <p>Review your performance metrics, ongoing goals, and receive feedback for growth.</p>
+            <a href="/my-performance/" class="card-link">Check Performance</a>
+        </div>
+    </div>
+
+    <div class="quick-actions-section">
+        <h3>Quick Actions</h3>
+        <div class="action-buttons-grid">
+            <a href="/add-employee/" class="action-button add-emp">
+                <span class="icon"></span>
+                Add Employee
+            </a>
+            <a href="/show-details/" class="action-button view-all">
+                <span class="icon"></span>
+                View All Employees
+            </a>
+            <a href="/submit-timesheet/" class="action-button timesheet">
+                <span class="icon"></span>
+                Submit Timesheet
+            </a>
+            <a href="/contact-hr/" class="action-button contact-hr">
+                <span class="icon"></span>
+                Contact HR
+            </a>
+            <a href="/reports/" class="action-button reports">
+                <span class="icon"></span>
+                Generate Report
+            </a>
+        </div>
+    </div>
+
+    <div class="quick-actions-section" style="margin-top:30px; background-color: #f0f8ff;">
+        <h3>Need Help?</h3>
+        <p style="font-size: 1em; color: #555;">Our support team is here for you. Explore our <a href="/faq/" style="color:#3498db; text-decoration:none; font-weight:bold;">FAQ</a> or reach out directly.</p>
+        <div class="action-buttons-grid">
+            <a href="/support/" class="action-button" style="background-color: #f39c12;"><span class="icon">📞</span> Live Support</a>
+            <a href="/feedback/" class="action-button" style="background-color: #9b59b6;"><span class="icon">📝</span> Send Feedback</a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

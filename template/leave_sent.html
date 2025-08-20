@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Leave Requests Dashboard (HR)</title>
+  <style>
+    body {
+      background-color: #f4f6f8;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 30px;
+    }
+
+    .dashboard-container {
+      max-width: 900px;
+      margin: auto;
+      background-color: #ffffff;
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #222;
+      font-size: 26px;
+      margin-bottom: 25px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 12px 15px;
+      border-bottom: 1px solid #ddd;
+      font-size: 15px;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .action-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      margin-right: 6px;
+    }
+
+    .approve {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .reject {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .pending {
+      background-color: #ffc107;
+      color: #333;
+      border-radius: 5px;
+      padding: 3px 8px;
+    }
+
+    .approved {
+      background-color: #28a745;
+      color: white;
+      border-radius: 5px;
+      padding: 3px 8px;
+    }
+
+    .rejected {
+      background-color: #dc3545;
+      color: white;
+      border-radius: 5px;
+      padding: 3px 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-container">
+    <h2>Leave Requests Dashboard</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Employee Name</th>
+          <th>Leave Type</th>
+          <th>From</th>
+          <th>To</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Sourabh Kushwah</td>
+          <td>Sick Leave</td>
+          <td>2025-08-01</td>
+          <td>2025-08-03</td>
+          <td><span class="pending">Pending</span></td>
+          <td>
+            <button class="action-btn approve">Approve</button>
+            <button class="action-btn reject">Reject</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Priya Sharma</td>
+          <td>Casual Leave</td>
+          <td>2025-08-05</td>
+          <td>2025-08-06</td>
+          <td><span class="approved">Approved</span></td>
+          <td>
+            <button class="action-btn approve" disabled>Approve</button>
+            <button class="action-btn reject" disabled>Reject</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Rahul Mehta</td>
+          <td>Earned Leave</td>
+          <td>2025-08-10</td>
+          <td>2025-08-15</td>
+          <td><span class="rejected">Rejected</span></td>
+          <td>
+            <button class="action-btn approve" disabled>Approve</button>
+            <button class="action-btn reject" disabled>Reject</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
+
+

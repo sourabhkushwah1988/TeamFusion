@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Your App Title{% endblock %}</title> {# Dynamic title for better SEO and clarity #}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base Styles - for the whole page */
+        body {
+            font-family: 'Poppins', sans-serif; /* Modern, clean font */
+            margin: 0;
+            padding-top: 60px; /* Space for fixed navbar */
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); /* Soft, modern background */
+            min-height: 100vh; /* Ensure body takes full height */
+            color: #333; /* Default text color */
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #2c3e50; /* Darker, professional blue/gray */
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            display: flex; /* Use flexbox for better alignment */
+            justify-content: flex-end; /* Align items to the right by default */
+            align-items: center;
+            height: 60px; /* Fixed height for consistency */
+            padding: 0 25px; /* Padding on sides */
+            box-sizing: border-box; /* Include padding in width/height */
+        }
+
+        .navbar-brand { /* Optional: For a logo or app name on the left */
+            margin-right: auto; /* Pushes other links to the right */
+            color: #ecf0f1; /* Light text for brand */
+            font-size: 1.6em; /* Larger font for brand */
+            font-weight: 700;
+            text-decoration: none;
+            padding: 0; /* Remove default link padding */
+        }
+
+        .navbar a {
+            display: flex; /* Use flex for internal icon/text alignment if needed */
+            align-items: center;
+            color: #ecf0f1; /* Light gray for links */
+            text-align: center;
+            padding: 10px 18px; /* Slightly more vertical padding */
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: 500; /* Medium font weight */
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            border-radius: 6px; /* Slightly rounded corners for links */
+            margin-left: 10px; /* Space between links */
+        }
+
+        .navbar a:hover {
+            background-color: #34495e; /* Slightly lighter dark background on hover */
+            color: #ffffff; /* Pure white text on hover */
+            transform: translateY(-2px); /* Subtle lift effect */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar a.active { /* For active link state, if you implement it */
+            background-color: #5cb85c; /* Green accent for active link */
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Responsive Navbar */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column; /* Stack items vertically */
+                height: auto; /* Auto height to fit content */
+                padding: 10px 0;
+                justify-content: center;
+            }
+            .navbar a {
+                width: 90%; /* Full width for stacked links */
+                margin: 5px auto; /* Center links with margin */
+                padding: 12px 0;
+            }
+            .navbar-brand {
+                margin-right: 0; /* Reset margin */
+                margin-bottom: 10px; /* Space below brand */
+                text-align: center;
+                width: 100%;
+            }
+            body {
+                padding-top: 100px; /* Adjust padding for stacked navbar */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    {# Optional: Add a brand/logo link that pushes other links to the right #}
+    <a href="/" class="navbar-brand" style="font-family: 'Pacifico', cursive; font-size: 28px; color: white; text-decoration: none;">
+  TeamFusion
+</a>
+
+
+    {% if user.is_authenticated %}
+    {# Apply consistent styling classes to all links #}
+    <a href="userhome">Welcome, {{ user.username }}</a> {# Display username if available #}
+    <a href="show">Employee Details</a>
+    <a href="add">Add Employee</a>
+    <a href="logout">Logout</a>
+    {% else %}
+    <a href="/">Home</a>
+    <a href="signin">Sign In</a>
+    <a href="signup">Sign Up</a>
+    {% endif %}
+</div>
+
+{# The main content of other pages will be injected here #}
+<div class="main-content-container"> 
+    {% block content %}
+    {# Default content if no specific content block is provided by child templates #}
+    <p style="padding: 20px; text-align: center;">Welcome! No specific content loaded yet.</p>
+    {% endblock %}
+</div>
+
+</body>
+</html>

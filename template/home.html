@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Employee Management{% endblock %}
+
+{% block content %}
+<style>
+    /* Internal CSS for Home Page */
+    .home-content {
+        text-align: center;
+        padding: 40px 20px;
+        margin: 20px auto;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 900px;
+        width: 90%;
+        min-height: auto;
+        box-sizing: border-box;
+        display: block;
+    }
+    .home-content h2 {
+        color: #333;
+        margin-bottom: 25px;
+        font-size: 2.5em;
+    }
+    .home-content p {
+        font-size: 1.1em;
+        line-height: 1.6;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    /* Section styling */
+    .section-title {
+        color: #333;
+        font-size: 2em;
+        margin-top: 40px;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    /* Features Grid */
+    .features-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px; /* Space between feature boxes */
+        margin-top: 30px;
+    }
+    .feature-item {
+        background-color: #f9f9f9;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 25px;
+        width: calc(33% - 25px); /* Three columns, accounting for gap */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        text-align: left;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .feature-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .feature-item h3 {
+        color: #5cb85c; /* Green accent */
+        margin-top: 0;
+        margin-bottom: 15px;
+        font-size: 1.4em;
+    }
+    .feature-item p {
+        font-size: 0.95em;
+        line-height: 1.5;
+        color: #666;
+        margin-bottom: 0;
+    }
+
+    /* Benefits Section */
+    .benefits-list {
+        list-style: none;
+        padding: 0;
+        text-align: left;
+        margin: 30px auto 0 auto;
+        max-width: 700px;
+    }
+    .benefits-list li {
+        background-color: #eaf7ed; /* Light green background */
+        margin-bottom: 15px;
+        padding: 15px 20px;
+        border-left: 5px solid #5cb85c; /* Green border */
+        border-radius: 5px;
+        font-size: 1.05em;
+        color: #444;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+    .benefits-list li strong {
+        color: #333;
+    }
+
+    /* Testimonials/About Us Section */
+    .testimonial-section {
+        background-color: #f0f0f0; /* Slightly darker background */
+        padding: 40px 20px;
+        margin-top: 50px;
+        border-radius: 8px;
+        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+    }
+    .testimonial-item {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px dashed #ccc;
+    }
+    .testimonial-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    .testimonial-item p {
+        font-style: italic;
+        font-size: 1.1em;
+        color: #444;
+        margin-bottom: 10px;
+    }
+    .testimonial-item .author {
+        font-weight: bold;
+        color: #5cb85c; /* Green accent */
+        font-size: 0.95em;
+    }
+
+    /* Call to Action (CTA) styling */
+    .cta-section {
+        background-color: #e6f7e6; /* Light green background for CTA */
+        border-radius: 8px;
+        padding: 40px;
+        margin-top: 50px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .cta-section h3 {
+        color: #333;
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+    .cta-section p {
+        font-size: 1.1em;
+        margin-bottom: 30px;
+        color: #444;
+    }
+    .home-buttons a {
+        display: inline-block;
+        background-color: #5cb85c; /* Green button from your original CSS */
+        color: white;
+        padding: 15px 30px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.1em;
+        margin: 0 10px;
+        transition: background-color 0.3s ease;
+    }
+    .home-buttons a:hover {
+        background-color: #4cae4c; /* Darker green on hover */
+    }
+    .home-buttons a.secondary {
+        background-color: #6c757d; /* Grey button for secondary action */
+    }
+    .home-buttons a.secondary:hover {
+        background-color: #5a6268;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .features-grid {
+            flex-direction: column;
+            align-items: center;
+        }
+        .feature-item {
+            width: 90%; /* Single column on smaller screens */
+            max-width: 400px;
+        }
+    }
+    @media (max-width: 480px) {
+        .home-content h2 {
+            font-size: 2em;
+        }
+        .section-title, .cta-section h3 {
+            font-size: 1.8em;
+        }
+        .home-buttons a {
+            display: block;
+            margin: 10px 0;
+        }
+    }
+</style>
+
+<div class="home-content">
+    <h2>Welcome to the Employee Management System!</h2>
+    <p>Empower your organization with a robust and intuitive platform designed to streamline human resource operations, enhance productivity, and foster a connected workforce. Our comprehensive solution helps you manage every aspect of your employees' journey, from onboarding to offboarding, all in one place.</p>
+
+    ---
+
+    <h2 class="section-title">Why Choose Our System?</h2>
+    <p>We understand the complexities of modern HR. Our system is built with your needs in mind, offering a powerful yet user-friendly experience.</p>
+
+    <div class="features-grid">
+        <div class="feature-item">
+            <h3>📈 Streamlined Operations</h3>
+            <p>Automate tedious HR tasks, reduce paperwork, and free up your team to focus on strategic initiatives.</p>
+        </div>
+        <div class="feature-item">
+            <h3>📊 Data-Driven Insights</h3>
+            <p>Gain valuable analytics on workforce trends, performance, and more, empowering better decision-making.</p>
+        </div>
+        <div class="feature-item">
+            <h3>🔒 Enhanced Security</h3>
+            <p>Protect sensitive employee data with industry-standard security protocols and role-based access.</p>
+        </div>
+        <div class="feature-item">
+            <h3>🤝 Improved Employee Experience</h3>
+            <p>Provide employees with self-service options, easy access to information, and transparent communication.</p>
+        </div>
+        <div class="feature-item">
+            <h3>🔄 Scalable & Flexible</h3>
+            <p>Our system grows with your business, adapting to your evolving needs, whether you have 10 employees or 10,000.</p>
+        </div>
+        <div class="feature-item">
+            <h3>🌐 Anywhere, Anytime Access</h3>
+            <p>Manage your workforce remotely with our cloud-based platform, accessible from any device.</p>
+        </div>
+    </div>
+
+    ---
+
+    <h2 class="section-title">Key Features at a Glance</h2>
+    <p>Explore the core functionalities that make our Employee Management System indispensable:</p>
+    <ul class="benefits-list">
+        <li><strong>Comprehensive Employee Profiles:</strong> Store and manage all essential employee data, including personal details, job history, contracts, and documents.</li>
+        <li><strong>Automated Attendance & Leave Management:</strong> Track clock-ins/outs, manage diverse leave types, and process applications with automated workflows.</li>
+        <li><strong>Robust Performance Tracking:</strong> Facilitate goal setting, conduct performance appraisals, and identify areas for employee development.</li>
+        <li><strong>Integrated Payroll & Benefits:</strong> Seamlessly connect with financial systems for accurate payroll processing and benefits administration.</li>
+        <li><strong>Customizable Reporting & Analytics:</strong> Generate tailored reports on HR metrics, compliance, and workforce demographics.</li>
+        <li><strong>Training & Development Modules:</strong> Assign and track training courses, certifications, and skill development programs.</li>
+        <li><strong>Secure Self-Service Portals:</strong> Empower employees to update personal information, apply for leave, and access payslips securely.</li>
+        <li><strong>Efficient Onboarding & Offboarding:</strong> Streamline the complete employee lifecycle with automated checklists and workflows.</li>
+    </ul>
+
+    ---
+
+    <h2 class="section-title">What Our Clients Say</h2>
+    <div class="testimonial-section">
+        <div class="testimonial-item">
+            <p>"Implementing this Employee Management System has revolutionized our HR department. The ease of use and comprehensive features have saved us countless hours!"</p>
+            <div class="author">- Priya Sharma, HR Manager at TechSolutions Inc.</div>
+        </div>
+        <div class="testimonial-item">
+            <p>"The attendance tracking is incredibly accurate, and the reporting tools give us insights we never had before. A truly invaluable asset for our growing team."</p>
+            <div class="author">- Rajesh Kumar, Operations Head at Global Connect Ltd.</div>
+        </div>
+        <div class="testimonial-item">
+            <p>"We love the employee self-service portal. It has significantly reduced queries to HR and given our staff more control over their own data. Highly recommended!"</p>
+            <div class="author">- Anjali Singh, CEO of InnovateCorp.</div>
+        </div>
+    </div>
+
+    ---
+
+    <div class="cta-section">
+        <h3>Ready to Transform Your HR Management?</h3>
+        <p>Take the first step towards a more efficient and empowered workforce. Join countless organizations who trust our system to simplify their employee management needs.</p>
+        <div class="home-buttons">
+            <a href="{% url 'signup' %}">Get Started Today!</a>
+            <a href="{% url 'signin' %}" class="secondary">Already a Member? Sign In</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,315 @@
+{% extends 'base.html' %}
+
+{% block title %}Employee Details{% endblock %}
+
+{% block content %}
+<style>
+    /* Internal CSS for Decorated Employee Details Table */
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: linear-gradient(135deg, #e9f2f9 0%, #cce0f5 100%); /* Light blue gradient background */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .main-content-container {
+        flex: none; /* Disable base.html's flex growth for direct body centering */
+        padding: 0;
+        width: 100%;
+    }
+
+    .table-container-decorated {
+        background-color: #ffffff; /* Pure white background for the container */
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        margin-top: 30px; /* Space from navbar */
+        width: 100%;
+        max-width: 1200px; /* Wider for table content */
+        box-sizing: border-box;
+        border: 1px solid #e0e6ed; /* Subtle border */
+        overflow-x: auto; /* Enable horizontal scrolling for small screens */
+    }
+
+    .page-heading {
+        color: #2c3e50;
+        font-size: 2.8em; /* Larger heading */
+        font-weight: 700;
+        margin-bottom: 30px;
+        text-align: center;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .page-heading::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+        width: 90px;
+        height: 5px;
+        background-color: #5cb85c; /* Accent color */
+        border-radius: 2.5px;
+    }
+
+    /* Table Styling */
+    .employee-table { /* Changed class name to avoid conflict with generic 'table' */
+        width: 100%;
+        border-collapse: separate; /* Use separate for rounded corners on cells */
+        border-spacing: 0; /* Remove default cell spacing */
+        margin-top: 20px;
+        border-radius: 10px; /* Apply border-radius to the entire table */
+        overflow: hidden; /* Ensures content respects border-radius */
+    }
+
+    .employee-table th,
+    .employee-table td {
+        padding: 12px 18px; /* More padding for spacious cells */
+        text-align: left;
+        border: 1px solid #e0e6ed; /* Lighter border for cells */
+    }
+
+    .employee-table thead {
+        background-color: #5cb85c; /* Green header background */
+        color: white;
+    }
+
+    .employee-table th {
+        font-weight: 600;
+        font-size: 1.05em;
+        position: sticky; /* Make headers sticky for scrollable tables */
+        top: 0;
+        background-color: #5cb85c; /* Ensure sticky header keeps its background */
+        z-index: 1; /* Keep header above scrolling content */
+    }
+
+    /* Specific styling for the Sr. No. column */
+    .employee-table th:first-child,
+    .employee-table td:first-child {
+        text-align: center; /* Center the serial number */
+        width: 60px; /* Give it a fixed small width */
+    }
+
+
+    .employee-table tbody tr:nth-child(even) {
+        background-color: #f7fcf9; /* Very light green for even rows */
+    }
+
+    .employee-table tbody tr:hover {
+        background-color: #e6f7e6; /* Softer green on hover */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* Subtle row shadow on hover */
+        transform: translateY(-2px); /* Slight lift effect */
+        transition: all 0.2s ease-in-out;
+    }
+    
+    /* Ensure first/last row corners are rounded if possible */
+    .employee-table th:first-child { border-top-left-radius: 10px; }
+    .employee-table th:last-child { border-top-right-radius: 10px; }
+
+    /* Table Footer (New Styles) */
+    .employee-table tfoot {
+        background-color: #eff6ee; /* A slightly different light green for footer */
+        font-weight: bold;
+        color: #333;
+        border-top: 2px solid #5cb85c; /* Stronger border at top of footer */
+    }
+
+    .employee-table tfoot td {
+        padding: 15px 18px; /* More padding for footer cells */
+        font-size: 1.1em;
+    }
+    .employee-table tfoot tr:last-child td:first-child { border-bottom-left-radius: 10px; } /* Apply radius to bottom corners */
+    .employee-table tfoot tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
+
+    /* Action Links Styling */
+    .action-link {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.2s ease, transform 0.1s ease;
+        font-size: 0.9em;
+    }
+
+    .update-link {
+        background-color: #3498db; /* Blue for Update */
+        color: white;
+    }
+
+    .update-link:hover {
+        background-color: #2980b9;
+        transform: translateY(-1px);
+    }
+
+    .delete-link {
+        background-color: #e74c3c; /* Red for Delete */
+        color: white;
+        margin-left: 5px; /* Space between links */
+    }
+
+    .delete-link:hover {
+        background-color: #c0392b;
+        transform: translateY(-1px);
+    }
+
+    /* Add Employee Button */
+    .add-employee-button-container {
+        text-align: right; /* Align button to the right */
+        margin-bottom: 25px; /* Space above table */
+        padding-right: 10px; /* Slight padding from container edge */
+    }
+
+    .add-employee-button {
+        display: inline-block;
+        background-color: #28a745; /* Green color for add button */
+        color: white;
+        padding: 12px 25px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1em;
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
+    }
+
+    .add-employee-button:hover {
+        background-color: #218838;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 1024px) {
+        .table-container-decorated {
+            padding: 20px;
+        }
+        .page-heading {
+            font-size: 2.2em;
+            margin-bottom: 25px;
+        }
+        .page-heading::after {
+            width: 70px;
+            height: 4px;
+        }
+        .employee-table th, .employee-table td {
+            padding: 10px 15px;
+        }
+        .employee-table tfoot td {
+            font-size: 1em;
+            padding: 12px 15px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .table-container-decorated {
+            margin-top: 20px;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .page-heading {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        .page-heading::after {
+            width: 50px;
+            height: 3px;
+        }
+        .add-employee-button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .table-container-decorated {
+            padding: 10px;
+        }
+        .employee-table th, .employee-table td {
+            font-size: 0.85em;
+            padding: 8px 10px;
+        }
+        .action-link {
+            padding: 4px 8px;
+            font-size: 0.8em;
+        }
+        .add-employee-button {
+            padding: 10px 20px;
+            font-size: 0.9em;
+        }
+        .employee-table tfoot td {
+            font-size: 0.9em;
+            padding: 10px 10px;
+        }
+    }
+</style>
+
+<div class="table-container-decorated">
+    <h1 class="page-heading">All Employee Records</h1>
+
+    <div class="add-employee-button-container">
+        <a href="/add.html" class="add-employee-button">Add New Employee</a>
+    </div>
+
+    <table class="employee-table">
+        <thead>
+            <tr>
+                <th>Sr. No.</th> {# <-- NEW: Serial Number Header #}
+                <th>Employee Id</th>
+                <th>Employee Name</th>
+                <th>Age</th>
+                <th>Mobile</th>
+                <th>E-Mail</th>
+                <th>City</th>
+                <th>Salary</th>
+                <th colspan="2" style="text-align: center;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in employee %}
+            <tr class="{% if forloop.counter0 is even %}table-primary{% else %}table-secondary{% endif %}">
+                <td>{{ forloop.counter }}</td> {# <-- NEW: Automatic Serial Number #}
+                <td>{{ emp.eid }}</td>
+                <td>{{ emp.name }}</td>
+                <td>{{ emp.age }}</td>
+                <td>{{ emp.mobile }}</td>
+                <td>{{ emp.email }}</td>
+                <td>{{ emp.city }}</td>
+                <td>{{ emp.salary }}</td>
+                <td><a href="/edit/{{ emp.eid }}/" class="action-link update-link">Update</a></td>
+                <td><a href="/delete/{{ emp.eid }}/" class="action-link delete-link">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                {# Adjusted colspan for the new Sr. No. column #}
+                <td colspan="7" style="text-align: right; padding-right: 30px;">
+                    **Total Employees:**
+                </td>
+                <td>**{{ total_employees }}**</td>
+                <td colspan="2" style="text-align: center;">
+                    **Total Salary:**
+                </td>
+            </tr>
+            <tr>
+                {# Adjusted colspan for the new Sr. No. column #}
+                <td colspan="8" style="text-align: right; padding-right: 30px; border-top: none;">
+                    {# Empty cell to align the total salary under the salary column (and beyond) #}
+                </td>
+                <td colspan="2" style="text-align: center;">
+                    **₹ {{ total_salary|floatformat:2 }}**
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+{% endblock %}

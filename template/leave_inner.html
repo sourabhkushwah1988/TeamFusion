@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Leave Management (HR)</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      padding: 30px;
+    }
+    .leave-card {
+      max-width: 700px;
+      margin: auto;
+      background-color: #ffffff;
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #222;
+      font-size: 26px;
+      margin-bottom: 25px;
+    }
+    label {
+      font-weight: 600;
+      margin-top: 15px;
+      display: block;
+      color: #333;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-top: 8px;
+      font-size: 15px;
+      background-color: #fdfdfd;
+    }
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 25px;
+    }
+    .btn {
+      flex: 1;
+      padding: 12px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: 0.3s ease;
+    }
+    .approve {
+      background-color: #28a745;
+      color: white;
+    }
+    .approve:hover {
+      background-color: #218838;
+    }
+    .reject {
+      background-color: #dc3545;
+      color: white;
+    }
+    .reject:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <div class="leave-card">
+    <h2>Review Leave Request</h2>
+    <form method="POST" action="{% url 'process_leave' %}">
+      {% csrf_token %}
+
+      <label for="emp_name">Employee Name</label>
+      <input type="text" name="emp_name" value="Sourabh Kushwah" readonly>
+
+      <label for="emp_id">Employee ID</label>
+      <input type="text" name="emp_id" value="EMP023" readonly>
+
+      <label for="leave_type">Leave Type</label>
+      <input type="text" name="leave_type" value="Sick Leave" readonly>
+
+      <label for="from_date">From Date</label>
+      <input type="date" name="from_date" value="2025-08-01" readonly>
+
+      <label for="to_date">To Date</label>
+      <input type="date" name="to_date" value="2025-08-03" readonly>
+
+      <label for="reason">Reason</label>
+      <textarea rows="4" readonly>I have a fever and will visit the doctor.</textarea>
+
+      <label for="current_balance">Leave Balance</label>
+      <input type="text" name="current_balance" value="7 Days Remaining" readonly>
+
+      <div class="button-group">
+        <button type="submit" name="action" value="approve" class="btn approve">Approve</button>
+        <button type="submit" name="action" value="reject" class="btn reject">Reject</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
+{% endblock %}

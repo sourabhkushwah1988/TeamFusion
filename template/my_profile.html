@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Profile</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+    .profile-container {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 800px;
+      margin: auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 600;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    .form-row {
+      display: flex;
+      gap: 20px;
+    }
+    .form-row > div {
+      flex: 1;
+    }
+    button {
+      margin-top: 25px;
+      padding: 12px 20px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <h2>My Profile</h2>
+    <form method="POST">
+      <!-- Personal Details -->
+      <div class="form-row">
+        <div>
+          <label>Full Name</label>
+          <input type="text" name="full_name" required>
+        </div>
+        <div>
+          <label>Employee ID</label>
+          <input type="text" name="employee_id" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div>
+          <label>Email</label>
+          <input type="email" name="email" required>
+        </div>
+        <div>
+          <label>Phone Number</label>
+          <input type="text" name="phone" required>
+        </div>
+      </div>
+
+      <label>Date of Birth</label>
+      <input type="date" name="dob" required>
+
+      <label>Gender</label>
+      <select name="gender">
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+
+      <label>Address</label>
+      <textarea name="address" rows="2"></textarea>
+
+      <!-- Job Details -->
+      <label>Designation</label>
+      <input type="text" name="designation" required>
+
+      <label>Department</label>
+      <input type="text" name="department" required>
+
+      <label>Date of Joining</label>
+      <input type="date" name="doj" required>
+
+      <div class="form-row">
+        <div>
+          <label>Reporting Manager</label>
+          <input type="text" name="manager">
+        </div>
+        <div>
+          <label>Work Location</label>
+          <input type="text" name="location">
+        </div>
+      </div>
+
+      <!-- Bank and Document Details -->
+      <label>PAN Number</label>
+      <input type="text" name="pan">
+
+      <label>Aadhar Number</label>
+      <input type="text" name="aadhar">
+
+      <label>Bank Account Number</label>
+      <input type="text" name="bank_account">
+
+      <label>IFSC Code</label>
+      <input type="text" name="ifsc">
+
+      <!-- Submit -->
+      <button type="submit">Save Profile</button>
+    </form>
+  </div>
+</body>
+</html>
+{% endblock %}

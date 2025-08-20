@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign In - Employee Management{% endblock %}
+
+{% block content %}
+<style>
+    /* Internal CSS for a "Good-Looking" Signin Page */
+    /*
+    These styles specifically target and enhance the appearance
+    of the signin form and its elements, consistent with the signup page.
+    They work in conjunction with (and potentially override parts of)
+    the styles defined in base.html.
+    */
+
+    body {
+        /* This body style is mostly for ensuring the form is centered and background fits. */
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); /* Soft gradient background */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 50px); /* Adjust for navbar height */
+        margin: 0;
+        padding: 70px 20px 20px 20px; /* Add top padding for navbar */
+        box-sizing: border-box;
+    }
+
+    /* Override base.html .main-content-container's flex property to allow direct body centering */
+    .main-content-container {
+        flex: none; /* Disable flex growth from base.html for this specific page */
+        padding: 0; /* Remove padding as it's handled by body/form-container */
+    }
+
+    .form-container {
+        background-color: #ffffff; /* Pure white background */
+        padding: 40px; /* More padding for a spacious feel */
+        border-radius: 12px; /* More rounded corners */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
+        text-align: center;
+        width: 100%;
+        max-width: 450px; /* Consistent width with signup */
+        box-sizing: border-box;
+        border: 1px solid #e0e6ed; /* Subtle border */
+    }
+
+    .form-container h2 {
+        margin-bottom: 30px; /* More space below heading */
+        color: #2c3e50; /* Darker, professional heading color */
+        font-size: 2.2em; /* Larger heading */
+        font-weight: 600; /* Slightly bolder */
+    }
+
+    .form-container label {
+        display: block;
+        text-align: left;
+        margin-bottom: 8px; /* More space below label */
+        font-weight: 600; /* Bolder labels */
+        color: #555;
+        font-size: 0.95em; /* Slightly smaller label text */
+    }
+
+    .form-container input[type="text"],
+    .form-container input[type="email"], /* Though usually username for sign-in */
+    .form-container input[type="password"] {
+        width: calc(100% - 24px); /* Account for padding */
+        padding: 12px; /* More vertical padding */
+        margin: 0 0 20px 0; /* More space below input fields */
+        border: 1px solid #c9d6df; /* Softer border color */
+        border-radius: 8px; /* More rounded input fields */
+        box-sizing: border-box;
+        font-size: 1em;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-container input[type="text"]:focus,
+    .form-container input[type="email"]:focus,
+    .form-container input[type="password"]:focus {
+        border-color: #5cb85c; /* Highlight border on focus with accent color */
+        box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.2); /* Soft green glow on focus */
+        outline: none; /* Remove default outline */
+    }
+
+    .form-container button {
+        width: 100%;
+        padding: 15px; /* More padding for a bigger button */
+        background-color: #5cb85c; /* Your chosen green accent color */
+        color: white;
+        border: none;
+        border-radius: 8px; /* More rounded button */
+        cursor: pointer;
+        font-size: 1.1em; /* Larger button text */
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        letter-spacing: 0.5px; /* Slight letter spacing */
+    }
+
+    .form-container button:hover {
+        background-color: #4cae4c; /* Darker green on hover */
+        transform: translateY(-2px); /* Slight lift effect */
+    }
+
+    .link-text {
+        margin-top: 25px; /* More space above the link */
+        font-size: 0.9em; /* Slightly smaller link text */
+        color: #777; /* Softer text color */
+    }
+
+    .link-text a {
+        color: #5cb85c; /* Accent color for the link */
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+
+    .link-text a:hover {
+        color: #4cae4c; /* Darker accent on hover */
+        text-decoration: underline;
+    }
+</style>
+
+<div class="form-container">
+    <h2>Welcome Back!</h2>
+    <form action="{% url 'signinpage' %}" method="POST">
+        {% csrf_token %}
+        <label for="username">Username or Email</label>
+        <input type="text" name="username" placeholder="Enter your username or email" required>
+
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="Your password" required>
+
+        <button type="submit">Sign In</button>
+    </form>
+    <div class="link-text">
+        <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up Here</a></p>
+    </div>
+</div>
+{% endblock %}
+</create_file>

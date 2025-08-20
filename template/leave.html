@@ -1,0 +1,56 @@
+<!-- Inside <body> after the navbar -->
+
+<div class="container">
+    <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/869/869636.png" alt="Leave Icon">
+        <h3><strong>Leave</strong> Management</h3>
+        <p class="description">Apply for new leave, check your remaining balance, and review past leave history.</p>
+        <a href="#" class="btn btn-manage mb-3">Apply for Leave</a>
+
+        <!-- Leave History Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-success text-center">
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>Leave Type</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Status</th>
+                        <th>Reason</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr>
+                        <td>1</td>
+                        <td>Casual Leave</td>
+                        <td>2025-07-01</td>
+                        <td>2025-07-03</td>
+                        <td><span class="badge bg-success">Approved</span></td>
+                        <td>Personal Work</td>
+                        <td><button class="btn btn-sm btn-danger">Cancel</button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Sick Leave</td>
+                        <td>2025-06-15</td>
+                        <td>2025-06-16</td>
+                        <td><span class="badge bg-warning text-dark">Pending</span></td>
+                        <td>Fever</td>
+                        <td><button class="btn btn-sm btn-danger">Cancel</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Annual Leave</td>
+                        <td>2025-05-10</td>
+                        <td>2025-05-15</td>
+                        <td><span class="badge bg-danger">Rejected</span></td>
+                        <td>Family Function</td>
+                        <td><button class="btn btn-sm btn-secondary" disabled>Cancel</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
